@@ -75,6 +75,13 @@ const Footer = () => (
         <CoinbaseIcon />
       </div>
 
+      <div className="mb-10 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-4 text-sm text-amber-900">
+        <p className="font-bold mb-1">Educational demo project</p>
+        <p className="leading-relaxed">
+          This site is a student project for learning purposes only. Do not enter real personal information, real passwords, or any sensitive financial data.
+        </p>
+      </div>
+
       {/* Link columns */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pb-12 border-b border-gray-300">
         {footerData.map(({ heading, links, subHeadings }) => (

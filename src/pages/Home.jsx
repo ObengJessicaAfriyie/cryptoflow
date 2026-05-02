@@ -79,7 +79,7 @@ const LearnCard = ({ bg, title, desc, illustration }) => (
   </div>
 );
 
-const CoinbaseBadge = ({ label }) => (
+const DemoBadge = ({ label }) => (
   <div className="inline-flex items-center gap-2 border border-gray-300 rounded-full px-3 py-1.5 mb-6">
     <div className="w-4 h-4 rounded-full bg-[#0052ff] flex items-center justify-center">
       <svg width="8" height="8" viewBox="0 0 32 32">
@@ -307,16 +307,16 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ══ 4. COINBASE ONE ══ */}
+      {/* ══ 4. PREMIUM FEATURES ══ */}
       <section className="py-16 bg-white border-t border-gray-100">
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6 flex flex-col lg:flex-row items-center gap-12">
           <div className="flex-1">
-            <CoinbaseBadge label="Coinbase One" />
+            <DemoBadge label="Premium" />
             <Text font="display2" as="h2" className="text-gray-900 mb-4">
-              Zero trading fees, more rewards.
+              Advanced trading features for demo users.
             </Text>
             <Text font="body" as="p" className="text-gray-500 mb-8">
-              Get more out of crypto with one membership: zero trading fees, boosted rewards, priority support, and more.
+              Explore premium features in this educational demo: advanced tools, detailed analytics, portfolio tracking, and more.
             </Text>
             <button onClick={() => navigate('/signup')}
               className="bg-gray-900 text-white px-6 py-3.5 rounded-full hover:bg-gray-700 transition-colors cds-label1">
@@ -435,12 +435,12 @@ const Home = () => {
           </div>
 
           <div className="flex-1">
-            <CoinbaseBadge label="Base App" />
+            <DemoBadge label="Community" />
             <Text font="display2" as="h2" className="text-gray-900 mb-4">
-              Countless ways to earn crypto with the Base App.
+              Connect and explore the crypto community.
             </Text>
             <Text font="body" as="p" className="text-gray-500 mb-8">
-              An everything app to trade, create, discover, and chat, all in one place.
+              An interactive platform to discover assets, learn, trade, and chat, all in one place. This is an educational demo.
             </Text>
             <button onClick={() => navigate('/signup')}
               className="bg-gray-900 text-white px-6 py-3.5 rounded-full hover:bg-gray-700 transition-colors cds-label1">

@@ -58,8 +58,8 @@
   }
 }
 
-/* Coinbase logo color */
-.coinbase-logo-blue {
+/* Brand primary color */
+.brand-primary {
   color: #0052ff;
 }
 
@@ -97,7 +97,7 @@
   animation-play-state: paused;
 }
 
-/* ── Coinbase CDS Typography Scale ── */
+/* ── CryptoFlow Typography Scale ── */
 .cds-display1 {
   font-size: clamp(40px, 5vw, 72px);
   font-weight: 900;

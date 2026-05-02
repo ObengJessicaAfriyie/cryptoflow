@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
-const CoinbaseIcon = () => (
+const AppIcon = () => (
   <svg height="36" viewBox="0 0 32 32" width="36" xmlns="http://www.w3.org/2000/svg">
     <rect fill="white" height="32" rx="50%" width="32" />
     <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 4a8 8 0 110 16A8 8 0 0116 8zm-2.5 5a2.5 2.5 0 000 5h5a2.5 2.5 0 000-5h-5z" fill="#0d0d0d" />
@@ -97,14 +97,25 @@ export default function SignUp() {
     setTimeout(() => navigate('/'), 300);
   };
 
+  const handleDemoAuth = () => {
+    setStep(2);
+  };
+
   // ── Step 1: Email form ──
   if (step === 1) {
     return (
       <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
+        {/* Disclaimer Banner */}
+        <div className="w-full bg-yellow-900/30 border-b border-yellow-700/50 px-4 py-2 text-center">
+          <p className="text-[13px] text-yellow-100">
+            ⚠️ Educational Demo Only - Not a real cryptocurrency exchange
+          </p>
+        </div>
+
         {/* Logo */}
         <div className="p-6">
           <Link to="/">
-            <CoinbaseIcon />
+            <AppIcon />
           </Link>
         </div>
 
@@ -112,10 +123,14 @@ export default function SignUp() {
           <div className="w-full max-w-[390px]">
 
             <h1 className="text-[28px] font-bold text-white mb-2 leading-tight">
-              Create your account
+              Create your demo account
             </h1>
             <p className="text-[15px] text-gray-400 mb-7 leading-relaxed">
-              Access all that Coinbase has to offer with a single account.
+              Explore the CryptoFlow demo platform - an educational cryptocurrency interface project.
+            </p>
+
+            <p className="mb-4 rounded-xl border border-yellow-700/50 bg-yellow-900/20 px-3 py-2 text-[13px] text-yellow-100">
+              Demo app - do not use your real password
             </p>
 
             <form onSubmit={handleContinue}>
@@ -124,6 +139,7 @@ export default function SignUp() {
               </label>
               <input
                 type="email"
+                required
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 placeholder="Your email address"
@@ -147,11 +163,11 @@ export default function SignUp() {
 
             {/* Social buttons */}
             <div className="space-y-3">
-              <button className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[#1a1a1a] hover:bg-[#222] border border-[#2a2a2a] text-white font-semibold text-[15px] transition-colors">
+              <button type="button" onClick={handleDemoAuth} className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[#1a1a1a] hover:bg-[#222] border border-[#2a2a2a] text-white font-semibold text-[15px] transition-colors">
                 <GoogleIcon />
                 Sign up with Google
               </button>
-              <button className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[#1a1a1a] hover:bg-[#222] border border-[#2a2a2a] text-white font-semibold text-[15px] transition-colors">
+              <button type="button" onClick={handleDemoAuth} className="w-full flex items-center justify-center gap-3 py-4 rounded-full bg-[#1a1a1a] hover:bg-[#222] border border-[#2a2a2a] text-white font-semibold text-[15px] transition-colors">
                 <AppleIcon />
                 Sign up with Apple
               </button>
@@ -181,10 +197,17 @@ export default function SignUp() {
   // ── Step 2: Account type picker ──
   return (
     <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
+      {/* Disclaimer Banner */}
+      <div className="w-full bg-yellow-900/30 border-b border-yellow-700/50 px-4 py-2 text-center">
+        <p className="text-[13px] text-yellow-100">
+          ⚠️ Educational Demo Only - Not a real cryptocurrency exchange
+        </p>
+      </div>
+
       {/* Logo */}
       <div className="p-6">
         <Link to="/">
-          <CoinbaseIcon />
+          <AppIcon />
         </Link>
       </div>
 

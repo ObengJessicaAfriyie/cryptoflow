@@ -1,5 +1,6 @@
 {
-  "name": "coinbase-clone",
+  "name": "cryptoflow-demo",
+  "description": "CryptoFlow - Educational Cryptocurrency Demo Project (Student Work). This is NOT affiliated with Coinbase or any real cryptocurrency exchange.",
   "private": true,
   "version": "0.0.0",
   "type": "module",

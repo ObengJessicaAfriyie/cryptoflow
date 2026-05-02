@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // ── Icons ──
-const CoinbaseIcon = () => (
+const AppIcon = () => (
   <svg height="32" viewBox="0 0 32 32" width="32" xmlns="http://www.w3.org/2000/svg">
     <rect fill="#0052ff" height="32" rx="50%" width="32" />
     <path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 4a8 8 0 110 16A8 8 0 0116 8zm-2.5 5a2.5 2.5 0 000 5h5a2.5 2.5 0 000-5h-5z" fill="#fff" />
@@ -70,31 +70,31 @@ const Icons = {
 const PROMOS = {
   Individuals: {
     visual: (<div className="w-full h-[110px] rounded-2xl bg-gradient-to-br from-[#0052ff] to-[#003de0] flex items-center justify-center mb-3"><svg width="52" height="52" viewBox="0 0 32 32"><path d="M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12 12-5.373 12-12S22.627 4 16 4zm0 4a8 8 0 110 16A8 8 0 0116 8zm-2.5 5a2.5 2.5 0 000 5h5a2.5 2.5 0 000-5h-5z" fill="white" /></svg></div>),
-    title: 'System Update 2025', desc: 'The next chapter of Coinbase.', cta: 'Learn more',
+    title: 'CryptoFlow Platform', desc: 'Explore the demo crypto interface.', cta: 'Learn more',
   },
   Businesses: {
     visual: (<div className="w-full h-[110px] rounded-2xl bg-gradient-to-br from-[#0052ff] to-[#6c47ff] flex items-center justify-center mb-3 relative overflow-hidden"><div className="absolute inset-0 flex items-center justify-center gap-2"><div className="w-16 h-20 bg-white/20 rounded-xl rotate-6" /><div className="w-16 h-20 bg-white rounded-xl flex items-center justify-center shadow-xl z-10"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0052ff" strokeWidth="2"><rect x="1" y="4" width="22" height="16" rx="2" /><line x1="1" y1="10" x2="23" y2="10" /></svg></div><div className="w-16 h-20 bg-white/20 rounded-xl -rotate-6" /></div></div>),
-    title: 'Commerce Payments Protocol', desc: 'A new standard for onchain payments.', cta: 'Go to Payments',
+    title: 'Demo Features', desc: 'Educational portfolio project showcase.', cta: 'Explore',
   },
   Institutions: {
     visual: (<div className="w-full h-[110px] rounded-2xl bg-gradient-to-br from-[#0052ff] to-[#0038cc] flex items-center justify-center mb-3 overflow-hidden"><svg width="100" height="100" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none" /><ellipse cx="50" cy="50" rx="25" ry="45" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none" /><ellipse cx="50" cy="50" rx="45" ry="20" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none" />{[...Array(48)].map((_, i) => { const angle = (i/48)*2*Math.PI; const r = 30+(i%4)*5; return <circle key={i} cx={50+r*Math.cos(angle)} cy={50+r*Math.sin(angle)} r="1.5" fill="white" opacity={0.5+(i%3)*0.2} />; })}</svg></div>),
-    title: 'Our clients', desc: 'Trusted by institutions and government.', cta: 'Learn more',
+    title: 'Student Project', desc: 'Academic multimedia web development.', cta: 'Learn more',
     titleClass: 'text-[16px] font-bold underline text-gray-900',
     descClass: 'text-[14px] text-gray-400 underline mt-1 leading-snug',
   },
   Developers: {
     visual: (<div className="w-full h-[110px] rounded-2xl bg-gray-100 flex items-center justify-center mb-3 overflow-hidden relative"><div className="absolute inset-0 p-3"><div className="w-full h-full bg-white rounded-xl shadow-sm p-2 flex flex-col gap-1.5"><div className="flex gap-1"><div className="h-2 bg-[#0052ff] rounded w-8" /><div className="h-2 bg-gray-200 rounded flex-1" /></div><div className="flex gap-1 items-end h-10">{[40,65,45,80,55,90,60,75].map((h,i) => (<div key={i} className="flex-1 rounded-sm" style={{ height:`${h}%`, backgroundColor: i===5?'#0052ff':'#e5e7eb' }} />))}</div><div className="flex gap-1"><div className="h-1.5 bg-gray-200 rounded w-12" /><div className="h-1.5 bg-[#a78bfa] rounded w-8" /></div></div></div></div>),
-    title: 'World class crypto infrastructure.',
-    desc: "Discover Coinbase's complete crypto-as-a-service platform.",
+    title: 'Educational Platform',
+    desc: "Learn web development with CryptoFlow demo.",
     cta: 'Learn more',
     titleClass: 'text-[16px] font-bold text-gray-900 leading-snug',
     descClass: 'text-[14px] text-gray-400 mt-1 leading-snug',
   },
   Company: {
-    visual: (<div className="w-full h-[140px] rounded-2xl bg-[#0052ff] flex items-center justify-center mb-3 relative overflow-hidden"><div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '10px 10px' }} /><p className="relative text-white text-[11px] font-bold tracking-widest uppercase text-center px-4 leading-relaxed">CRYPTO MOVES<br />MONEY FORWARD</p></div>),
-    title: 'Learn all about Coinbase:',
-    desc: "We're building the open financial system.",
-    cta: 'Create your account',
+    visual: (<div className="w-full h-[140px] rounded-2xl bg-[#0052ff] flex items-center justify-center mb-3 relative overflow-hidden"><div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '10px 10px' }} /><p className="relative text-white text-[11px] font-bold tracking-widest uppercase text-center px-4 leading-relaxed">LEARN CRYPTO<br />BUILD YOUR SKILLS</p></div>),
+    title: 'About CryptoFlow:',
+    desc: "Educational demo for portfolio projects.",
+    cta: 'Start exploring',
     titleClass: 'text-[16px] font-bold text-gray-900 leading-snug',
     descClass: 'text-[14px] text-gray-400 mt-1 leading-snug',
     ctaClass: 'text-[13px] font-bold text-gray-900 underline mt-2 block hover:text-[#0052ff] transition-colors',
@@ -106,46 +106,46 @@ const DROPDOWNS = {
   Individuals: {
     type: 'simple', cols: 2,
     items: [
-      { icon: Icons.buysell,     label: 'Buy and sell',    desc: 'Buy, sell, and use crypto' },
-      { icon: Icons.advanced,    label: 'Advanced',        desc: 'Professional-grade trading tools' },
-      { icon: Icons.baseapp,     label: 'Base App',        desc: 'Post, earn, trade, and chat, all in one place' },
-      { icon: Icons.earn,        label: 'Earn',            desc: 'Stake your crypto and earn rewards' },
-      { icon: Icons.coinbaseone, label: 'Coinbase One',    desc: 'Get zero trading fees and more' },
-      { icon: Icons.wealth,      label: 'Coinbase Wealth', desc: 'Institutional-grade services for UHNW' },
+      { icon: Icons.buysell,     label: 'Trade',          desc: 'Buy, sell, and trade crypto' },
+      { icon: Icons.advanced,    label: 'Advanced Tools', desc: 'Professional-grade trading interface' },
+      { icon: Icons.baseapp,     label: 'Community',      desc: 'Connect and trade with other users' },
+      { icon: Icons.earn,        label: 'Rewards',        desc: 'Stake crypto and earn returns' },
+      { icon: Icons.coinbaseone, label: 'Premium',        desc: 'Explore premium features' },
+      { icon: Icons.wealth,      label: 'Portfolio',      desc: 'Manage your crypto portfolio' },
     ],
   },
   Businesses: {
     type: 'simple', cols: 2,
     items: [
-      { icon: Icons.briefcase,    label: 'Business',       desc: 'Crypto trading and payments for startups and SMBs' },
-      { icon: Icons.payments,     label: 'Payments',       desc: 'The stablecoin payments stack for commerce platforms' },
-      { icon: Icons.asset,        label: 'Asset Listings', desc: 'List your asset on Coinbase' },
-      { icon: Icons.tokenmanager, label: 'Token Manager',  desc: 'The platform for token distributions, vesting, and lockups' },
+      { icon: Icons.briefcase,    label: 'For Business',   desc: 'Crypto solutions for businesses' },
+      { icon: Icons.payments,     label: 'Payments',       desc: 'Payment integration features' },
+      { icon: Icons.asset,        label: 'Listings',       desc: 'Asset listing information' },
+      { icon: Icons.tokenmanager, label: 'Management',     desc: 'Crypto management tools' },
     ],
   },
   Institutions: {
     type: 'sectioned',
     sections: [
-      { heading: 'Prime', headingLink: true, items: [{ icon: Icons.clock, label: 'Trading and Financing', desc: 'Professional prime brokerage services' }, { icon: Icons.custody, label: 'Custody', desc: 'Securely store all your digital assets' }, { icon: Icons.staking, label: 'Staking', desc: 'Explore staking across our platforms' }] },
-      { heading: 'Markets', headingLink: false, items: [{ icon: Icons.exchange, label: 'Exchange', desc: 'Spot markets for high-frequency trading' }, { icon: Icons.intlexchange, label: 'International Exchange', desc: 'Access perpetual futures markets' }, { icon: Icons.derivatives, label: 'Derivatives Exchange', desc: 'Trade an accessible futures market' }] },
+      { heading: 'Features', headingLink: true, items: [{ icon: Icons.clock, label: 'Trading', desc: 'Professional trading services' }, { icon: Icons.custody, label: 'Management', desc: 'Manage your digital assets' }, { icon: Icons.staking, label: 'Staking', desc: 'Explore staking opportunities' }] },
+      { heading: 'Markets', headingLink: false, items: [{ icon: Icons.exchange, label: 'Exchange', desc: 'Spot markets' }, { icon: Icons.intlexchange, label: 'Global Market', desc: 'Access to global markets' }, { icon: Icons.derivatives, label: 'Derivatives', desc: 'Futures and derivatives trading' }] },
     ],
   },
   Developers: {
     type: 'sectioned',
     sections: [
-      { heading: 'Coinbase Developer Platform', headingLink: true, items: [{ icon: Icons.devpayments, label: 'Payments', desc: 'Fast and global stablecoin payments' }, { icon: Icons.trading, label: 'Trading', desc: 'Launch crypto trading and custody for your users' }, { icon: Icons.wallets, label: 'Wallets', desc: 'Bring your own wallet or build a new one' }, { icon: Icons.onramp, label: 'Onramp', desc: 'Let users buy crypto directly in your app' }] },
-      { heading: 'Solutions for any company', headingLink: false, items: [{ icon: Icons.banks, label: 'Banks & Brokerages', desc: 'Secure, regulated offerings for banking clients' }, { icon: Icons.paymentfirms, label: 'Payment Firms', desc: 'Near-instant, low-cost, global payment rails' }, { icon: Icons.startups, label: 'Startups', desc: 'Build and scale your crypto product fast' }, { icon: Icons.enterprise, label: 'Enterprise', desc: 'Integrate crypto into your existing business' }] },
+      { heading: 'Developer Tools', headingLink: true, items: [{ icon: Icons.devpayments, label: 'Payments', desc: 'Stablecoin payment APIs' }, { icon: Icons.trading, label: 'Trading', desc: 'Trading APIs and tools' }, { icon: Icons.wallets, label: 'Wallets', desc: 'Wallet integration APIs' }, { icon: Icons.onramp, label: 'Onramp', desc: 'Fiat on-ramp functionality' }] },
+      { heading: 'Use Cases', headingLink: false, items: [{ icon: Icons.banks, label: 'Finance', desc: 'For financial institutions' }, { icon: Icons.paymentfirms, label: 'Payments', desc: 'Payment processing solutions' }, { icon: Icons.startups, label: 'Startups', desc: 'For startup projects' }, { icon: Icons.enterprise, label: 'Enterprise', desc: 'Enterprise integrations' }] },
     ],
   },
   Company: {
     type: 'simple', cols: 2,
     items: [
-      { icon: Icons.about,      label: 'About',      desc: 'Powering the crypto economy' },
-      { icon: Icons.careers,    label: 'Careers',    desc: 'Work with us' },
-      { icon: Icons.affiliates, label: 'Affiliates', desc: 'Help introduce the world to crypto' },
-      { icon: Icons.support,    label: 'Support',    desc: 'Find answers to your questions' },
-      { icon: Icons.blog,       label: 'Blog',       desc: 'Read the latest from Coinbase' },
-      { icon: Icons.security,   label: 'Security',   desc: 'The most trusted & secure' },
+      { icon: Icons.about,      label: 'About',      desc: 'About CryptoFlow' },
+      { icon: Icons.careers,    label: 'Resources',  desc: 'Learning resources' },
+      { icon: Icons.affiliates, label: 'Partners',   desc: 'Partnership opportunities' },
+      { icon: Icons.support,    label: 'Support',    desc: 'Get support and help' },
+      { icon: Icons.blog,       label: 'Learn',      desc: 'Learn about crypto' },
+      { icon: Icons.security,   label: 'Security',   desc: 'Security information' },
     ],
   },
 };
@@ -517,15 +517,15 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-200 ${
+      <nav className={`sticky top-0 z-30 bg-white transition-all duration-200 ${
         scrolled ? 'shadow-sm border-b border-gray-200' : 'border-b border-gray-100'
       }`}>
         <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-          <div className="flex items-center h-[64px] gap-2">
+          <div className="flex items-center h-[72px] gap-2">
 
             {/* Logo */}
             <Link to="/" className="flex-shrink-0 mr-3" onClick={() => setActiveDropdown(null)}>
-              <CoinbaseIcon />
+              <AppIcon />
             </Link>
 
             {/* Desktop nav links — hide when search is open */}

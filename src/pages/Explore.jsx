@@ -39,7 +39,7 @@ const MiniChart = ({ positive = false }) => {
   );
 };
 
-const FILTERS = ['All assets', 'Gainers', 'Losers', 'New on Coinbase', 'Tradable'];
+const FILTERS = ['All assets', 'Gainers', 'Losers', 'New assets', 'Tradable'];
 const TIME_FILTERS = ['1D', '1W', '1M', '1Y'];
 const CURRENCIES = ['USD', 'GHS', 'EUR', 'GBP'];
 const ROW_OPTIONS = ['10 rows', '20 rows', '50 rows'];
@@ -51,7 +51,7 @@ const marketStats = [
   { label: 'BTC dominance',     value: '60.17%',     change: '↗ 0.55%',  positive: true  },
 ];
 
-const newOnCoinbase = [
+const newAssets = [
   { symbol: 'HYPE',    name: 'Hyperliquid', added: 'Added Feb 5',  color: '#1a1a2e' },
   { symbol: 'JUPITER', name: 'Jupiter',     added: 'Added Dec 9',  color: '#16213e' },
 ];
@@ -116,7 +116,7 @@ const Explore = () => {
           <div className="flex-1">
             <h1 className="text-[32px] font-bold text-gray-900 mb-1">Explore crypto</h1>
             <p className="text-[14px] text-gray-500 flex items-center gap-1 mb-6">
-              Coinbase 50 Index is down
+              Crypto Market is down
               <span className="text-red-500 font-medium">↘ 1.00% (24hrs)</span>
               <span className="w-4 h-4 rounded-full bg-gray-200 inline-flex items-center justify-center text-[10px] text-gray-500 cursor-help">?</span>
             </p>
@@ -367,7 +367,7 @@ const Explore = () => {
             <div className="mt-8 bg-[#0052ff] rounded-2xl p-8 flex items-center justify-between overflow-hidden relative">
               <div className="relative z-10">
                 <p className="text-white text-[22px] font-bold leading-snug max-w-[320px]">
-                  Create a Coinbase account to trade crypto. It's quick, easy, and secure.
+                  Explore the CryptoFlow demo. Sign up to get started with the interface.
                 </p>
                 <button
                   onClick={() => navigate('/signup')}
@@ -401,17 +401,17 @@ const Explore = () => {
 
           {/* Right sidebar */}
           <div className="lg:w-[300px] space-y-4 mt-[52px]">
-            {/* New on Coinbase */}
+            {/* New Assets */}
             <div className="border border-gray-200 rounded-2xl p-4">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-bold text-gray-900 text-[15px]">New on Coinbase</h3>
+                <h3 className="font-bold text-gray-900 text-[15px]">New Assets</h3>
                 <div className="flex gap-1">
                   <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-400 text-xs">←</button>
                   <button className="w-7 h-7 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 text-gray-400 text-xs">→</button>
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
-                {newOnCoinbase.map(({ symbol, name, added, color }) => (
+                {newAssets.map(({ symbol, name, added, color }) => (
                   <div key={symbol} className="bg-gray-50 rounded-xl p-3">
                     <div className="w-10 h-10 rounded-full mb-2 flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: color }}>
                       {symbol.substring(0, 2)}
