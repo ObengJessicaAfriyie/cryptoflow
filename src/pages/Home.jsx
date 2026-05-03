@@ -198,7 +198,7 @@ const Home = () => {
           <div className="lg:w-[480px] flex-shrink-0">
             <div className="bg-gray-900 rounded-[24px] overflow-hidden shadow-2xl">
               <div className="flex items-center gap-3 px-6 pt-5 pb-3">
-                {['Tradable', 'Top gainers', 'New on Coinbase'].map(tab => (
+                {['Tradable', 'Top gainers', 'New Assets'].map(tab => (
                   <button key={tab} onClick={() => setActiveTab(tab)}
                     className={`py-1.5 transition-colors cds-label1 ${
                       activeTab === tab
@@ -297,7 +297,7 @@ const Home = () => {
               Powerful tools, designed for the advanced trader.
             </Text>
             <Text font="body" as="p" className="text-gray-500 mb-8">
-              Powerful analytical tools with the safety and security of Coinbase deliver the ultimate trading experience. Tap into sophisticated charting capabilities, real-time order books, and deep liquidity across hundreds of markets.
+              Powerful analytical tools designed for secure and reliable trading. Tap into sophisticated charting capabilities, real-time order books, and deep liquidity across hundreds of markets.
             </Text>
             <button onClick={() => navigate('/signup')}
               className="bg-gray-900 text-white px-6 py-3.5 rounded-full hover:bg-gray-700 transition-colors cds-label1">
@@ -350,13 +350,13 @@ const Home = () => {
                   <Text font="caption" as="span" className="text-gray-500 line-through">$14.68</Text>
                   <div className="flex items-center gap-1 ml-1">
                     <div className="w-3 h-3 rounded-full bg-[#0052ff]" />
-                    <Text font="legal" as="span" className="font-semibold text-[#0052ff]">No trading fees with Coinbase One</Text>
+                    <Text font="legal" as="span" className="font-semibold text-[#0052ff]">No trading fees with Premium</Text>
                   </div>
                 </div>
                 <div className="mx-4 mb-4 bg-gray-50 border border-gray-200 rounded-xl px-3 py-2.5 flex items-center justify-between">
                   <div>
                     <Text font="label2" as="p" className="text-gray-900">Exclusive member benefits</Text>
-                    <Text font="legal" as="p" className="text-gray-500 mt-0.5">Coinbase One members get boosted staking rewards.</Text>
+                    <Text font="legal" as="p" className="text-gray-500 mt-0.5">Premium members get boosted staking rewards.</Text>
                     <a href="#" className="cds-legal font-medium text-[#0052ff] mt-1 block">Learn more</a>
                   </div>
                   <div className="w-10 h-10 bg-[#0052ff] rounded-full flex items-center justify-center flex-shrink-0 ml-2">
@@ -471,7 +471,7 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-6">
             <LearnCard bg="#111"
               title="USDC: The digital dollar for the global crypto economy"
-              desc="Coinbase believes crypto will be part of the solution for creating an open financial system that is both more efficient and more..."
+              desc="We believe crypto will be part of the solution for creating an open financial system that is both more efficient and more..."
               illustration={
                 <div className="relative w-full h-full flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-[#0052ff] flex items-center justify-center relative">
@@ -568,7 +568,7 @@ const Home = () => {
       <section className="py-10 bg-white border-t border-gray-100">
         <div className="max-w-[800px] mx-auto px-4 text-center">
           <Text font="caption" as="p" className="text-gray-400 mb-3">
-            DEX trading is offered by Coinbase Bermuda Technologies Ltd.
+            DEX trading is available on our platform.
           </Text>
           <Text font="legal" as="p" className="text-gray-400">
             Products and features may not be available in all regions. Information is for or informational purposes only, and is not (i) an offer, or solicitation of an offer, to invest in, or to buy or sell, any interests or shares, or to participate in any investment or trading strategy or (ii) intended to provide accounting, legal, or tax advice, or investment recommendations. Trading cryptocurrency comes with risk.

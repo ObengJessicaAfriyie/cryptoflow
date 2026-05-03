@@ -16,13 +16,13 @@ const footerData = [
   },
   {
     heading: 'Learn',
-    links: ['Explore','Market statistics','Coinbase Bytes newsletter','Crypto basics','Tips & tutorials','Crypto glossary','Market updates','What is Bitcoin?','What is crypto?','What is a blockchain?','How to set up a crypto wallet?','How to send crypto?','Taxes'],
+    links: ['Explore','Market statistics','Crypto newsletter','Crypto basics','Tips & tutorials','Crypto glossary','Market updates','What is Bitcoin?','What is crypto?','What is a blockchain?','How to set up a crypto wallet?','How to send crypto?','Taxes'],
   },
   {
     heading: 'Individuals',
-    links: ['Buy & sell','Earn free crypto','Base App','Coinbase One','Debit Card'],
+    links: ['Buy & sell','Earn free crypto','Base App','Premium','Debit Card'],
     subHeadings: [
-      { heading: 'Businesses', links: ['Asset Listings','Coinbase Business','Payments','Commerce','Token Manager'] },
+      { heading: 'Businesses', links: ['Asset Listings','Business Tools','Payments','Commerce','Token Manager'] },
       { heading: 'Institutions', links: ['Prime','Staking','Exchange','International Exchange','Derivatives Exchange','Verified Pools'] },
     ],
   },
@@ -113,7 +113,7 @@ const Footer = () => (
 
         {/* Bottom row */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <p className="text-[13px] text-gray-500">© 2026 Coinbase</p>
+          <p className="text-[13px] text-gray-500">© 2026 CryptoFlow</p>
           <div className="flex items-center gap-4">
             <a href="#" className="text-[13px] text-gray-500 hover:text-gray-700">Privacy</a>
             <span className="text-gray-300">•</span>
