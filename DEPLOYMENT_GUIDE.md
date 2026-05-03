@@ -166,7 +166,7 @@ Use Vercel's serverless functions to replace backend:
 4. **Project Description**
    - GitHub: "Educational Cryptocurrency Demo (Student Project)"
    - Vercel: "Portfolio Project - Educational Demo"
-   - Never just "Crypto Exchange" or "Coinbase Clone"
+   - Always include "Educational Demo" or "Student Project" in the title
 
 ### What NOT to do:
 
