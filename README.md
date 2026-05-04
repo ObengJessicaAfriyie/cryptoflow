@@ -20,6 +20,8 @@
 
 **Using this for any commercial purpose, impersonating a real exchange, or deceiving users would be illegal and unethical.**
 
+Link to it - just for educational demo -  cryptoflowcash.vercel.app
+
 ---
 
 ## 📚 Overview
