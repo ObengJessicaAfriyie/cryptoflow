@@ -1,0 +1,30 @@
+# CryptoFlow - Educational Cryptocurrency Demo
+# Netlify Configuration
+# ⚠️ This is an educational project, NOT a real cryptocurrency exchange
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA routing
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Security headers with educational disclaimer
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    X-Educational-Disclaimer = "This is an educational demo project, not a real cryptocurrency exchange"
+    X-Project-Purpose = "Student Portfolio Project"
+    Cache-Control = "public, max-age=3600"
+
+# Disable caching for index.html to ensure fresh disclaimer banner
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Educational-Disclaimer = "This is an educational demo project, not a real cryptocurrency exchange"
