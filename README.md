@@ -351,3 +351,12 @@ For issues or questions:
 ## 🌐 Deployment on Netlify
 
 You must deploy your completed project on **Netlify**.
+
+---
+
+## 🔗 Deployed URLs
+
+- **Frontend (Vercel):** https://cryptoflowcash.vercel.app
+- **Backend (Render):** https://cryptoflow-wjxi.onrender.com
+
+These are the live deployments used during development and testing. The frontend is configured to call the backend at the Render URL via `VITE_API_URL`.
