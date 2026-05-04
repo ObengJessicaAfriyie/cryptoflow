@@ -34,5 +34,6 @@
   ],
   "env": {
     "VITE_API_URL": "@vite_api_url"
-  }
+  },
+  "envPrivate": ["VITE_API_URL"]
 }

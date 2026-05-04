@@ -1,6 +1,7 @@
 // src/pages/SignIn.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from '../services/api';
 
 const AppIcon = () => (
   <svg height="36" viewBox="0 0 32 32" width="36" xmlns="http://www.w3.org/2000/svg">
@@ -36,12 +37,21 @@ const AppleIcon = () => (
 export default function SignIn() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [step, setStep] = useState(1); // 1=email, 2=password
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleContinue = (e) => {
+  const handleContinue = async (e) => {
     e.preventDefault();
-    if (email && step === 1) {
+    setError('');
+    setLoading(true);
+    try {
+      await signIn(email, password);
       navigate('/');
+    } catch (err) {
+      setError(err.message || 'Sign in failed');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -77,6 +87,12 @@ export default function SignIn() {
             Demo app - do not use your real password
           </p>
 
+          {error && (
+            <p className="mb-4 rounded-xl border border-red-700/50 bg-red-900/20 px-3 py-2 text-[13px] text-red-100">
+              {error}
+            </p>
+          )}
+
           <form onSubmit={handleContinue}>
             {/* Email */}
             <label className="block text-[14px] font-semibold text-white mb-2">
@@ -91,12 +107,26 @@ export default function SignIn() {
               className="w-full px-4 py-4 rounded-xl bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 text-[15px] focus:outline-none focus:border-[#4a6cf7] transition-colors mb-4"
             />
 
+            {/* Password */}
+            <label className="block text-[14px] font-semibold text-white mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className="w-full px-4 py-4 rounded-xl bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 text-[15px] focus:outline-none focus:border-[#4a6cf7] transition-colors mb-4"
+            />
+
             {/* Continue */}
             <button
               type="submit"
-              className="w-full py-4 rounded-full bg-[#2a4dd0] hover:bg-[#1e3db8] text-white font-semibold text-[15px] transition-colors mb-5"
+              disabled={loading}
+              className="w-full py-4 rounded-full bg-[#2a4dd0] hover:bg-[#1e3db8] text-white font-semibold text-[15px] transition-colors mb-5 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Continue
+              {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 

@@ -1,6 +1,7 @@
 // src/pages/SignUp.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { signUp } from '../services/api';
 
 const AppIcon = () => (
   <svg height="36" viewBox="0 0 32 32" width="36" xmlns="http://www.w3.org/2000/svg">
@@ -82,19 +83,29 @@ const ACCOUNT_TYPES = [
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [step, setStep] = useState(1); // 1=email, 2=account type
+  const [step, setStep] = useState(1); // 1=email+password, 2=account type
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [selectedType, setSelectedType] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleContinue = (e) => {
     e.preventDefault();
-    if (email) setStep(2);
+    setError('');
+    if (email && password) setStep(2);
   };
 
-  const handleAccountType = (id) => {
+  const handleAccountType = async (id) => {
     setSelectedType(id);
-    // Brief delay then navigate home (simulating account creation)
-    setTimeout(() => navigate('/'), 300);
+    setLoading(true);
+    try {
+      await signUp(email, password, id);
+      setTimeout(() => navigate('/'), 300);
+    } catch (err) {
+      setError(err.message || 'Signup failed');
+      setLoading(false);
+    }
   };
 
   const handleDemoAuth = () => {
@@ -133,6 +144,12 @@ export default function SignUp() {
               Demo app - do not use your real password
             </p>
 
+            {error && (
+              <p className="mb-4 rounded-xl border border-red-700/50 bg-red-900/20 px-3 py-2 text-[13px] text-red-100">
+                {error}
+              </p>
+            )}
+
             <form onSubmit={handleContinue}>
               <label className="block text-[14px] font-semibold text-white mb-2">
                 Email
@@ -146,11 +163,24 @@ export default function SignUp() {
                 className="w-full px-4 py-4 rounded-xl bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 text-[15px] focus:outline-none focus:border-[#4a6cf7] transition-colors mb-4"
               />
 
+              <label className="block text-[14px] font-semibold text-white mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                required
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                placeholder="Create a password"
+                className="w-full px-4 py-4 rounded-xl bg-[#1a1a1a] border border-[#333] text-white placeholder-gray-500 text-[15px] focus:outline-none focus:border-[#4a6cf7] transition-colors mb-4"
+              />
+
               <button
                 type="submit"
-                className="w-full py-4 rounded-full bg-[#2a4dd0] hover:bg-[#1e3db8] text-white font-semibold text-[15px] transition-colors mb-5"
+                disabled={loading}
+                className="w-full py-4 rounded-full bg-[#2a4dd0] hover:bg-[#1e3db8] text-white font-semibold text-[15px] transition-colors mb-5 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Continue
+                {loading ? 'Creating...' : 'Continue'}
               </button>
             </form>
 
