@@ -1,8 +1,10 @@
 // API utility for backend calls
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+console.log('🔗 API URL configured:', API_URL);
 
 export const apiCall = async (endpoint, options = {}) => {
   const url = `${API_URL}${endpoint}`;
+  console.log(`📡 API Call: ${options.method || 'GET'} ${url}`);
   try {
     const response = await fetch(url, {
       headers: {
@@ -11,13 +13,16 @@ export const apiCall = async (endpoint, options = {}) => {
       },
       ...options,
     });
+    const data = await response.json();
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || `HTTP ${response.status}`);
+      const errorMsg = data?.error || `HTTP ${response.status}`;
+      console.error(`❌ API Error (${endpoint}):`, errorMsg);
+      throw new Error(errorMsg);
     }
-    return await response.json();
+    console.log(`✅ API Success (${endpoint}):`, data);
+    return data;
   } catch (err) {
-    console.error(`API Error (${endpoint}):`, err);
+    console.error(`❌ API Error (${endpoint}):`, err.message);
     throw err;
   }
 };

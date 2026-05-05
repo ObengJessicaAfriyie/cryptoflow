@@ -99,11 +99,16 @@ export default function SignUp() {
   const handleAccountType = async (id) => {
     setSelectedType(id);
     setLoading(true);
+    setError('');
     try {
-      await signUp(email, password, id);
+      console.log('🔐 Attempting signup with:', { email, accountType: id });
+      const result = await signUp(email, password, id);
+      console.log('✅ Signup successful:', result);
       setTimeout(() => navigate('/'), 300);
     } catch (err) {
-      setError(err.message || 'Signup failed');
+      const errorMsg = err.message || 'Signup failed';
+      console.error('❌ Signup error:', errorMsg);
+      setError(errorMsg);
       setLoading(false);
     }
   };
@@ -145,9 +150,10 @@ export default function SignUp() {
             </p>
 
             {error && (
-              <p className="mb-4 rounded-xl border border-red-700/50 bg-red-900/20 px-3 py-2 text-[13px] text-red-100">
-                {error}
-              </p>
+              <div className="mb-4 rounded-xl border border-red-700/50 bg-red-900/20 px-3 py-2 text-[13px] text-red-100">
+                <p><strong>Error:</strong> {error}</p>
+                <p className="text-[11px] mt-1 text-red-200">Check browser console (F12) for details.</p>
+              </div>
             )}
 
             <form onSubmit={handleContinue}>

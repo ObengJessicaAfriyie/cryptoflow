@@ -9,7 +9,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './db.js';
+import connectDB, { getDBReadyState, isDBConnected } from './db.js';
 import bcrypt from 'bcryptjs';
 import User from './models/User.js';
 import { fileURLToPath } from 'url';
@@ -34,9 +34,31 @@ connectDB().catch(err => {
   console.error('Database init error (ignored):', err && err.message ? err.message : err);
 });
 
+const ensureDatabase = (req, res, next) => {
+  if (!isDBConnected()) {
+    return res.status(503).json({
+      success: false,
+      error: 'Database not connected',
+      message: 'Set MONGODB_URI and redeploy the backend so MongoDB can connect.',
+      readyState: getDBReadyState(),
+    });
+  }
+
+  next();
+};
+
 // ── Middleware ──
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000', 'https://cryptoflowcash.vercel.app'],
+  credentials: true,
+}));
 app.use(express.json());
+
+// Request logging
+app.use((req, res, next) => {
+  console.log(`📨 ${req.method} ${req.path} - Origin: ${req.headers.origin || 'none'}`);
+  next();
+});
 
 // ── Educational Disclaimer ──
 app.use((req, res, next) => {
@@ -80,12 +102,31 @@ const mockCryptoData = [
 
 // ── Routes ──
 
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'CryptoFlow backend is running',
+    endpoints: [
+      'GET /health',
+      'GET /api/cryptocurrencies',
+      'GET /api/cryptocurrencies/:id',
+      'GET /api/market/stats',
+      'GET /api/users',
+      'POST /api/auth/signup',
+      'POST /api/auth/signin',
+    ],
+    databaseConnected: isDBConnected(),
+    readyState: getDBReadyState(),
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
     message: 'CryptoFlow Backend is running',
     disclaimer: 'This is an educational demo project',
+    databaseConnected: isDBConnected(),
   });
 });
 
@@ -115,7 +156,7 @@ app.get('/api/cryptocurrencies/:id', (req, res) => {
 });
 
 // Mock authentication endpoint (for demo purposes only)
-app.post('/api/auth/signup', async (req, res) => {
+app.post('/api/auth/signup', ensureDatabase, async (req, res) => {
   try {
     const { email, password, name } = req.body;
     if (!email || !password) {
@@ -139,7 +180,7 @@ app.post('/api/auth/signup', async (req, res) => {
   }
 });
 
-app.post('/api/auth/signin', async (req, res) => {
+app.post('/api/auth/signin', ensureDatabase, async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -160,7 +201,7 @@ app.post('/api/auth/signin', async (req, res) => {
 });
 
 // Simple users listing for verification (development only)
-app.get('/api/users', async (req, res) => {
+app.get('/api/users', ensureDatabase, async (req, res) => {
   try {
     const users = await User.find().select('-passwordHash -__v');
     res.json({ success: true, data: users });
@@ -190,10 +231,12 @@ app.use((req, res) => {
     success: false,
     error: 'Endpoint not found',
     availableEndpoints: [
+      'GET /',
       'GET /health',
       'GET /api/cryptocurrencies',
       'GET /api/cryptocurrencies/:id',
       'GET /api/market/stats',
+      'GET /api/users',
       'POST /api/auth/signup',
       'POST /api/auth/signin',
     ],
