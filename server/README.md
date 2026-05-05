@@ -1,53 +1,294 @@
-# CryptoFlow Backend Server
+# CryptoFlow Backend
 
-## ⚠️ EDUCATIONAL DEMO ONLY
+⚠️ **EDUCATIONAL DEMO ONLY** - Not affiliated with Coinbase or any real cryptocurrency exchange.
 
-This backend is part of an educational student project. **It is NOT a real cryptocurrency exchange or financial service.**
+This is a student project demonstrating Node.js/Express backend with MongoDB integration for a cryptocurrency dashboard application.
 
-## Overview
+## Features
 
-CryptoFlow Backend is a simple Node.js/Express server that provides mock cryptocurrency data and APIs for the educational CryptoFlow demo application.
+- ✅ JWT-based authentication (Register/Login)
+- ✅ Protected user profile endpoint
+- ✅ MongoDB data persistence
+- ✅ Cryptocurrency CRUD operations
+- ✅ Top gainers and new listings endpoints
+- ✅ RESTful API design
+- ✅ Error handling and validation
 
-## Getting Started
+## Setup & Installation
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v16+)
+- MongoDB (local or cloud instance)
 - npm or yarn
 
-### Installation
+### Environment Variables
 
-```bash
-cd server
-npm install
+Create a `.env` file in the server directory:
+
+```
+PORT=5000
+MONGODB_URI=mongodb://localhost:27017/cryptoflow
+MONGODB_DBNAME=cryptoflow
+JWT_SECRET=your-secret-key-here
+NODE_ENV=development
 ```
 
-### Running the Server
+For MongoDB Atlas:
 
-**Development Mode (with auto-reload):**
-```bash
-npm run dev
+```
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/cryptoflow
 ```
 
-**Production Mode:**
-```bash
-npm start
-```
+### Installation Steps
 
-The server will start on `http://localhost:5000`
+1. **Navigate to server directory:**
+   ```bash
+   cd server
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Seed initial data:**
+   ```bash
+   node scripts/seed.js
+   ```
+
+4. **Start the server:**
+   ```bash
+   npm start        # Production
+   npm run dev      # Development (with auto-reload)
+   ```
+
+Server will run on `http://localhost:5000`
 
 ## API Endpoints
 
-### Health Check
+### Authentication
+
+#### Register User
 ```
-GET /health
+POST /api/auth/register
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "name": "John Doe"
+}
+
+Response:
+{
+  "success": true,
+  "message": "User registered successfully",
+  "data": {
+    "id": "...",
+    "email": "user@example.com",
+    "name": "John Doe"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
 ```
-Returns server status and educational disclaimer.
+
+#### Login User
+```
+POST /api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+Response:
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    "id": "...",
+    "email": "user@example.com",
+    "name": "John Doe"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIs..."
+}
+```
+
+#### Get User Profile (Protected)
+```
+GET /api/auth/profile
+Authorization: Bearer <token>
+
+Response:
+{
+  "success": true,
+  "data": {
+    "_id": "...",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "createdAt": "2024-01-15T..."
+  }
+}
+```
+
+### Cryptocurrencies
+
+#### Get All Cryptocurrencies
+```
+GET /api/crypto
+
+Response:
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "...",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "price": 67730.65,
+      "change24h": -1.66,
+      ...
+    }
+  ]
+}
+```
+
+#### Get Single Cryptocurrency
+```
+GET /api/crypto/:id
+```
+
+#### Get Top Gainers (Top 10)
+```
+GET /api/crypto/gainers
+
+Response:
+{
+  "success": true,
+  "data": [
+    {
+      "name": "Solana",
+      "symbol": "SOL",
+      "price": 145.67,
+      "change24h": 8.90,
+      ...
+    }
+  ]
+}
+```
+
+#### Get New Listings (Top 10)
+```
+GET /api/crypto/new
+```
+
+#### Add New Cryptocurrency
+```
+POST /api/crypto
+Content-Type: application/json
+
+{
+  "name": "Ethereum",
+  "symbol": "ETH",
+  "price": 3534.36,
+  "image": "https://...",
+  "change24h": -0.93
+}
+```
+
+#### Update Cryptocurrency
+```
+PUT /api/crypto/:id
+Content-Type: application/json
+
+{
+  "price": 3600.00,
+  "change24h": 2.5
+}
+```
+
+#### Delete Cryptocurrency
+```
+DELETE /api/crypto/:id
+```
+
+## Database Schema
+
+### User Model
+```javascript
+{
+  email: String (unique, required),
+  passwordHash: String,
+  name: String,
+  createdAt: Date
+}
+```
+
+### Crypto Model
+```javascript
+{
+  name: String (required),
+  symbol: String (unique, uppercase),
+  price: Number (required),
+  image: String,
+  change24h: Number,
+  marketCap: Number,
+  volume24h: Number,
+  supply: Number,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
+
+## Project Structure
 
 ```
-GET /
+server/
+├── controllers/
+│   ├── authController.js      # Auth logic
+│   └── cryptoController.js    # Crypto logic
+├── middleware/
+│   └── auth.js               # JWT verification
+├── models/
+│   ├── User.js               # User schema
+│   └── Crypto.js             # Crypto schema
+├── scripts/
+│   └── seed.js               # Database seeding
+├── db.js                      # MongoDB connection
+├── server.js                  # Main server file
+├── package.json
+└── README.md
 ```
-Returns a quick backend status payload.
+
+## Authentication Flow
+
+1. User registers with email and password
+2. Password is hashed with bcryptjs
+3. JWT token is generated (expires in 7 days)
+4. Token is sent to frontend
+5. Frontend stores token and sends in Authorization header for protected routes
+6. Backend verifies token before granting access
+
+## Development Notes
+
+- Default JWT secret: `your-secret-key` (change in production!)
+- Passwords are hashed using bcryptjs with salt rounds 10
+- CORS enabled for localhost and Vercel deployment
+- All responses include `success` boolean and appropriate HTTP status codes
+
+## Deployment
+
+### Vercel
+1. Connect GitHub repo
+2. Set environment variables in Vercel dashboard
+3. Deploy automatically on push
+
+## License
+
+MIT - Educational Project Only
+
 
 ### Cryptocurrencies
 

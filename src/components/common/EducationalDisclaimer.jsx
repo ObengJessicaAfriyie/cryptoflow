@@ -37,11 +37,11 @@ export default function EducationalDisclaimer() {
   if (!disclaimerVisible) return null;
 
   return (
-    <div className="sticky top-0 z-40 w-full bg-gradient-to-r from-blue-950 to-sky-950 border-b-2 border-blue-800 px-4 py-1">
+    <div className="sticky top-0 z-40 w-full bg-gradient-to-r from-yellow-950 to-orange-950 border-b-2 border-yellow-800 px-4 py-1">
       <div className="max-w-[1200px] mx-auto flex items-start gap-3">
         {/* Warning Icon */}
         <svg
-          className="w-5 h-5 text-blue-100 flex-shrink-0 mt-0.5"
+          className="w-5 h-5 text-yellow-100 flex-shrink-0 mt-0.5"
           fill="currentColor"
           viewBox="0 0 20 20"
         >
@@ -54,10 +54,10 @@ export default function EducationalDisclaimer() {
 
         {/* Disclaimer Text */}
         <div className="flex-1">
-          <h3 className="text-blue-100 font-bold text-sm mb-1">
+          <h3 className="text-yellow-100 font-bold text-sm mb-1">
             ⚠️ EDUCATIONAL DEMO ONLY
           </h3>
-          <p className="text-blue-100/90 text-xs leading-relaxed">
+          <p className="text-yellow-100/90 text-xs leading-relaxed">
             This is an educational cryptocurrency demo project created by students. 
             <strong> It is NOT a real cryptocurrency exchange</strong> and is 
             <strong> NOT affiliated with Coinbase or any financial institution</strong>. 
@@ -68,7 +68,7 @@ export default function EducationalDisclaimer() {
         {/* Close Button */}
         <button
           onClick={() => setDisclaimerVisible(false)}
-          className="text-blue-100 hover:text-blue-50 flex-shrink-0 mt-1 opacity-70 hover:opacity-100 transition-opacity"
+          className="text-yellow-100 hover:text-yellow-50 flex-shrink-0 mt-1 opacity-70 hover:opacity-100 transition-opacity"
           aria-label="Close disclaimer"
         >
           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">

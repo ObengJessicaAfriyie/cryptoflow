@@ -62,8 +62,8 @@ export default function SignIn() {
   return (
     <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
       {/* Disclaimer Banner */}
-      <div className="w-full bg-blue-900/30 border-b border-blue-700/50 px-4 py-2 text-center">
-        <p className="text-[13px] text-blue-100">
+      <div className="w-full bg-yellow-900/30 border-b border-yellow-700/50 px-4 py-2 text-center">
+        <p className="text-[13px] text-yellow-100">
           ⚠️ Educational Demo Only - Not a real cryptocurrency exchange
         </p>
       </div>
@@ -83,7 +83,7 @@ export default function SignIn() {
             Sign in to CryptoFlow Demo
           </h1>
 
-          <p className="mb-4 rounded-xl border border-blue-700/50 bg-blue-900/20 px-3 py-2 text-[13px] text-blue-100">
+          <p className="mb-4 rounded-xl border border-yellow-700/50 bg-yellow-900/20 px-3 py-2 text-[13px] text-yellow-100">
             Demo app - do not use your real password
           </p>
 

@@ -100,21 +100,16 @@ export default function SignUp() {
     setSelectedType(id);
     setLoading(true);
     setError('');
-    console.log('🔐 State check - email:', email, 'password:', password, 'type:', id);
     if (!email || !password) {
-      setError('Email and password are required - check console');
+      setError('Email and password are required');
       setLoading(false);
       return;
     }
     try {
-      console.log('🔐 Attempting signup with:', { email, accountType: id });
-      const result = await signUp(email, password, id);
-      console.log('✅ Signup successful:', result);
+      await signUp(email, password, id);
       setTimeout(() => navigate('/'), 300);
     } catch (err) {
-      const errorMsg = err.message || 'Signup failed';
-      console.error('❌ Signup error:', errorMsg);
-      setError(errorMsg);
+      setError(err.message || 'Signup failed');
       setLoading(false);
     }
   };
@@ -128,8 +123,8 @@ export default function SignUp() {
     return (
       <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
         {/* Disclaimer Banner */}
-        <div className="w-full bg-blue-900/30 border-b border-blue-700/50 px-4 py-2 text-center">
-          <p className="text-[13px] text-blue-100">
+        <div className="w-full bg-yellow-900/30 border-b border-yellow-700/50 px-4 py-2 text-center">
+          <p className="text-[13px] text-yellow-100">
             ⚠️ Educational Demo Only - Not a real cryptocurrency exchange
           </p>
         </div>
@@ -151,14 +146,13 @@ export default function SignUp() {
               Explore the CryptoFlow demo platform - an educational cryptocurrency interface project.
             </p>
 
-            <p className="mb-4 rounded-xl border border-blue-700/50 bg-blue-900/20 px-3 py-2 text-[13px] text-blue-100">
+            <p className="mb-4 rounded-xl border border-yellow-700/50 bg-yellow-900/20 px-3 py-2 text-[13px] text-yellow-100">
               Demo app - do not use your real password
             </p>
 
             {error && (
               <div className="mb-4 rounded-xl border border-red-700/50 bg-red-900/20 px-3 py-2 text-[13px] text-red-100">
                 <p><strong>Error:</strong> {error}</p>
-                <p className="text-[11px] mt-1 text-red-200">Check browser console (F12) for details.</p>
               </div>
             )}
 
@@ -240,8 +234,8 @@ export default function SignUp() {
   return (
     <div className="min-h-screen bg-[#0d0d0d] flex flex-col">
       {/* Disclaimer Banner */}
-      <div className="w-full bg-blue-900/30 border-b border-blue-700/50 px-4 py-2 text-center">
-        <p className="text-[13px] text-blue-100">
+      <div className="w-full bg-yellow-900/30 border-b border-yellow-700/50 px-4 py-2 text-center">
+        <p className="text-[13px] text-yellow-100">
           ⚠️ Educational Demo Only - Not a real cryptocurrency exchange
         </p>
       </div>

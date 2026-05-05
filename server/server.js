@@ -10,8 +10,19 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import connectDB, { getDBReadyState, isDBConnected } from './db.js';
-import bcrypt from 'bcryptjs';
 import User from './models/User.js';
+import Crypto from './models/Crypto.js';
+import verifyToken from './middleware/auth.js';
+import { register, login, getProfile } from './controllers/authController.js';
+import {
+  getAllCryptos,
+  getCryptoById,
+  getTopGainers,
+  getNewListings,
+  addCrypto,
+  updateCrypto,
+  deleteCrypto,
+} from './controllers/cryptoController.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -66,40 +77,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// ── Mock Crypto Data ──
-const mockCryptoData = [
-  {
-    id: 'BTC',
-    symbol: 'BTC',
-    name: 'Bitcoin',
-    price: 67730.65,
-    change24h: -1.66,
-    marketCap: 1.34e12,
-    volume24h: 42e9,
-    supply: 21e6,
-  },
-  {
-    id: 'ETH',
-    symbol: 'ETH',
-    name: 'Ethereum',
-    price: 3534.36,
-    change24h: -0.93,
-    marketCap: 425e9,
-    volume24h: 21e9,
-    supply: 120.5e6,
-  },
-  {
-    id: 'USDT',
-    symbol: 'USDT',
-    name: 'Tether',
-    price: 10.77,
-    change24h: 0.01,
-    marketCap: 112.5e9,
-    volume24h: 79.1e9,
-    supply: 10.44e9,
-  },
-];
-
 // ── Routes ──
 
 app.get('/', (req, res) => {
@@ -108,12 +85,15 @@ app.get('/', (req, res) => {
     message: 'CryptoFlow backend is running',
     endpoints: [
       'GET /health',
-      'GET /api/cryptocurrencies',
-      'GET /api/cryptocurrencies/:id',
+      'POST /api/auth/register',
+      'POST /api/auth/login',
+      'GET /api/auth/profile (protected)',
+      'GET /api/crypto',
+      'GET /api/crypto/:id',
+      'GET /api/crypto/gainers',
+      'GET /api/crypto/new',
+      'POST /api/crypto',
       'GET /api/market/stats',
-      'GET /api/users',
-      'POST /api/auth/signup',
-      'POST /api/auth/signin',
     ],
     databaseConnected: isDBConnected(),
     readyState: getDBReadyState(),
@@ -130,86 +110,39 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Get all crypto data
-app.get('/api/cryptocurrencies', (req, res) => {
-  res.json({
-    success: true,
-    data: mockCryptoData,
-    notice: 'DEMO DATA: This is not real market data. For educational purposes only.',
-  });
-});
+// ── Authentication Routes ──
 
-// Get single crypto
-app.get('/api/cryptocurrencies/:id', (req, res) => {
-  const crypto = mockCryptoData.find(c => c.id === req.params.id.toUpperCase());
-  if (!crypto) {
-    return res.status(404).json({
-      success: false,
-      error: 'Cryptocurrency not found',
-    });
-  }
-  res.json({
-    success: true,
-    data: crypto,
-    notice: 'DEMO DATA: This is not real market data.',
-  });
-});
+// Register new user
+app.post('/api/auth/register', ensureDatabase, register);
 
-// Mock authentication endpoint (for demo purposes only)
-app.post('/api/auth/signup', ensureDatabase, async (req, res) => {
-  try {
-    const { email, password, name } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ success: false, error: 'Email and password are required' });
-    }
+// Login user
+app.post('/api/auth/login', ensureDatabase, login);
 
-    const existing = await User.findOne({ email });
-    if (existing) {
-      return res.status(409).json({ success: false, error: 'Email already registered' });
-    }
+// Get user profile (protected)
+app.get('/api/auth/profile', verifyToken, getProfile);
 
-    const salt = await bcrypt.genSalt(10);
-    const passwordHash = await bcrypt.hash(password, salt);
+// ── Cryptocurrency Routes ──
 
-    const user = await User.create({ email, passwordHash, name });
+// Get all cryptocurrencies
+app.get('/api/crypto', getAllCryptos);
 
-    res.status(201).json({ success: true, data: { id: user._id, email: user.email, name: user.name } });
-  } catch (err) {
-    console.error('Signup error:', err);
-    res.status(500).json({ success: false, error: 'Could not create user' });
-  }
-});
+// Get top gainers (must be before /:id route)
+app.get('/api/crypto/gainers', getTopGainers);
 
-app.post('/api/auth/signin', ensureDatabase, async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    if (!email || !password) {
-      return res.status(400).json({ success: false, error: 'Email and password are required' });
-    }
+// Get new listings (must be before /:id route)
+app.get('/api/crypto/new', getNewListings);
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+// Get single cryptocurrency by ID
+app.get('/api/crypto/:id', getCryptoById);
 
-    const match = await bcrypt.compare(password, user.passwordHash || '');
-    if (!match) return res.status(401).json({ success: false, error: 'Invalid credentials' });
+// Add new cryptocurrency (for admin/demo purposes)
+app.post('/api/crypto', addCrypto);
 
-    res.json({ success: true, data: { id: user._id, email: user.email, name: user.name } });
-  } catch (err) {
-    console.error('Signin error:', err);
-    res.status(500).json({ success: false, error: 'Signin failed' });
-  }
-});
+// Update cryptocurrency (for admin/demo purposes)
+app.put('/api/crypto/:id', updateCrypto);
 
-// Simple users listing for verification (development only)
-app.get('/api/users', ensureDatabase, async (req, res) => {
-  try {
-    const users = await User.find().select('-passwordHash -__v');
-    res.json({ success: true, data: users });
-  } catch (err) {
-    console.error('List users error:', err);
-    res.status(500).json({ success: false, error: 'Could not list users' });
-  }
-});
+// Delete cryptocurrency (for admin/demo purposes)
+app.delete('/api/crypto/:id', deleteCrypto);
 
 // Market stats endpoint
 app.get('/api/market/stats', (req, res) => {
@@ -225,6 +158,17 @@ app.get('/api/market/stats', (req, res) => {
   });
 });
 
+// Simple users listing for verification (development only)
+app.get('/api/users', ensureDatabase, async (req, res) => {
+  try {
+    const users = await User.find().select('-passwordHash -__v');
+    res.json({ success: true, data: users });
+  } catch (err) {
+    console.error('List users error:', err);
+    res.status(500).json({ success: false, error: 'Could not list users' });
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
@@ -233,12 +177,16 @@ app.use((req, res) => {
     availableEndpoints: [
       'GET /',
       'GET /health',
-      'GET /api/cryptocurrencies',
-      'GET /api/cryptocurrencies/:id',
+      'POST /api/auth/register',
+      'POST /api/auth/login',
+      'GET /api/auth/profile',
+      'GET /api/crypto',
+      'GET /api/crypto/:id',
+      'GET /api/crypto/gainers',
+      'GET /api/crypto/new',
+      'POST /api/crypto',
       'GET /api/market/stats',
       'GET /api/users',
-      'POST /api/auth/signup',
-      'POST /api/auth/signin',
     ],
   });
 });
