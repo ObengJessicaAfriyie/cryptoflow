@@ -100,6 +100,12 @@ export default function SignUp() {
     setSelectedType(id);
     setLoading(true);
     setError('');
+    console.log('🔐 State check - email:', email, 'password:', password, 'type:', id);
+    if (!email || !password) {
+      setError('Email and password are required - check console');
+      setLoading(false);
+      return;
+    }
     try {
       console.log('🔐 Attempting signup with:', { email, accountType: id });
       const result = await signUp(email, password, id);

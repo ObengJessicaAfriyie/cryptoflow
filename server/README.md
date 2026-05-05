@@ -44,6 +44,11 @@ GET /health
 ```
 Returns server status and educational disclaimer.
 
+```
+GET /
+```
+Returns a quick backend status payload.
+
 ### Cryptocurrencies
 
 Get all cryptocurrencies:
@@ -69,14 +74,20 @@ GET /api/market/stats
 Sign up (demo):
 ```
 POST /api/auth/signup
-Body: { "email": "user@example.com" }
+Body: { "email": "user@example.com", "password": "secret123", "name": "Personal" }
 ```
 
 Sign in (demo):
 ```
 POST /api/auth/signin
-Body: { "email": "user@example.com" }
+Body: { "email": "user@example.com", "password": "secret123" }
 ```
+
+### Users (Development Only)
+```
+GET /api/users
+```
+Lists users without password hashes.
 
 ## Data
 

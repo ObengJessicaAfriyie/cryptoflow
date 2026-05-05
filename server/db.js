@@ -20,4 +20,12 @@ async function connectDB(mongoUri) {
   }
 }
 
+export function isDBConnected() {
+  return mongoose.connection.readyState === 1;
+}
+
+export function getDBReadyState() {
+  return mongoose.connection.readyState;
+}
+
 export default connectDB;
